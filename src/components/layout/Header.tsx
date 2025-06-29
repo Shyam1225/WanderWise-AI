@@ -20,20 +20,6 @@ export function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Trip Planner', href: '/trip-planner' },
-    { 
-      name: 'Destinations', 
-      href: '/destinations',
-      hasDropdown: true,
-      dropdownItems: [
-        { name: 'All Destinations', href: '/destinations' },
-        { name: 'Europe', href: '/destinations/europe' },
-        { name: 'Asia', href: '/destinations/asia' },
-        { name: 'Americas', href: '/destinations/americas' },
-        { name: 'Africa', href: '/destinations/africa' },
-        { name: 'Oceania', href: '/destinations/oceania' },
-        { name: 'India', href: '/destinations/india' },
-      ]
-    },
     { name: 'Travel Guides', href: '/travel-guides' },
     { name: 'Virtual Travel', href: '/virtual-travel' },
     { name: 'About', href: '/about' },
@@ -59,61 +45,22 @@ export function Header() {
             <nav className="hidden lg:flex items-center space-x-8">
               {navigation.map((item) => (
                 <div key={item.name} className="relative">
-                  {item.hasDropdown ? (
-                    <div
-                      className="relative"
-                      onMouseEnter={() => setIsDestinationsOpen(true)}
-                      onMouseLeave={() => setIsDestinationsOpen(false)}
-                    >
-                      <NavLink
-                        to={item.href}
-                        className={({isActive}) => `flex items-center space-x-1 px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                          isActive
-                            ? 'text-[#ff6b35]'
-                            : 'text-white hover:text-[#ff6b35]'
-                        }`}
-                      >
-                        <span>{item.name}</span>
-                        <ChevronDown className="w-4 h-4" />
-                      </NavLink>
-                      
-                      {isDestinationsOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
-                        >
-                          {item.dropdownItems?.map((dropdownItem) => (
-                            <Link
-                              key={dropdownItem.name}
-                              to={dropdownItem.href}
-                              className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
-                            >
-                              {dropdownItem.name}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </div>
-                  ) : (
-                    <NavLink
-                      to={item.href}
-                      className={({isActive}) => `relative px-3 py-2 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                        isActive
-                          ? 'text-[#ff6b35]'
-                          : 'text-white hover:text-[#ff6b35]'
-                      }`}
-                    >
-                      {item.name}
-                      {location.pathname === item.href && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#ff6b35] rounded-full"
-                        />
-                      )}
-                    </NavLink>
-                  )}
+                  <NavLink
+                    to={item.href}
+                    className={({isActive}) => `relative px-3 py-2 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                      isActive
+                        ? 'text-[#ff6b35]'
+                        : 'text-white hover:text-[#ff6b35]'
+                    }`}
+                  >
+                    {item.name}
+                    {location.pathname === item.href && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#ff6b35] rounded-full"
+                      />
+                    )}
+                  </NavLink>
                 </div>
               ))}
             </nav>
@@ -193,20 +140,6 @@ export function Header() {
                   >
                     {item.name}
                   </NavLink>
-                  {item.hasDropdown && (
-                    <div className="ml-4 mt-2 space-y-2">
-                      {item.dropdownItems?.map((dropdownItem) => (
-                        <Link
-                          key={dropdownItem.name}
-                          to={dropdownItem.href}
-                          onClick={() => setIsMenuOpen(false)}
-                          className="block px-3 py-1 text-sm text-gray-400 hover:text-[#ff6b35] transition-colors duration-200"
-                        >
-                          {dropdownItem.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
               <div className="flex items-center justify-between pt-4 border-t border-gray-700">
