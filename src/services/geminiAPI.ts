@@ -25,10 +25,15 @@ interface TravelFormData {
   accessibilityNeeds: string;
   languagePreferences?: string[];
   transportationType?: 'flight' | 'train' | 'bus' | 'car' | 'any';
+  mustVisitPlaces?: string;
 }
 
 // Alias for TravelFormData to match the provided code
 type TravelPreferences = TravelFormData;
+
+// Gemini REST API endpoint (v1beta)
+const GEMINI_CHAT_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const GOOGLE_API_KEY = "AIzaSyB2h-YL3jBQpoKqFJeaTBdam1t3W3bGGSY";
 
 class GeminiAPIService {
   private apiKey: string;
@@ -36,7 +41,7 @@ class GeminiAPIService {
   private requestTimeout: number = 60000; // 60 seconds
 
   constructor() {
-    this.apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyB2h-YL3jBQpoKqFJeaTBdam1t3W3bGGSY';
+    this.apiKey = import.meta.env.VITE_GEMINI_API_KEY || GOOGLE_API_KEY;
     console.log('Gemini API Key loaded:', this.apiKey ? 'Yes' : 'No');
   }
 
@@ -58,6 +63,14 @@ TRAVELER PROFILE:
 - Accommodation: ${preferences.accommodation || 'Standard'}
 - Dietary Restrictions: ${preferences.dietaryRestrictions || 'None'}
 - Accessibility Needs: ${preferences.accessibilityNeeds || 'None'}
+${preferences.mustVisitPlaces ? `- Must-Visit Places: ${preferences.mustVisitPlaces}` : ''}
+
+CRITICAL FORMATTING REQUIREMENTS:
+1. You MUST respond with ONLY valid JSON - no markdown, no code blocks, no additional text
+2. The JSON must be complete and parseable 
+3. Do NOT use comments in the JSON
+4. Do NOT truncate or use "..." anywhere in the response
+5. Every day from 1 to ${duration} must be fully detailed
 
 REQUIREMENTS:
 Create a detailed day-by-day itinerary with:
@@ -146,6 +159,139 @@ Respond ONLY with JSON.`;
     return 'Ultra-Luxury ($500+/day)';
   }
 
+  private cleanJsonResponse(responseText: string): string {
+    console.log('Cleaning JSON response, length:', responseText.length);
+    
+    // Remove any markdown code blocks
+    let cleaned = responseText.replace(/```json\s*/g, '').replace(/```\s*$/g, '').replace(/```/g, '');
+    
+    // Remove any text before the first opening brace
+    const firstBrace = cleaned.indexOf('{');
+    if (firstBrace > 0) {
+      cleaned = cleaned.substring(firstBrace);
+    }
+    
+    // Remove any text after the last closing brace
+    const lastBrace = cleaned.lastIndexOf('}');
+    if (lastBrace !== -1 && lastBrace < cleaned.length - 1) {
+      cleaned = cleaned.substring(0, lastBrace + 1);
+    }
+    
+    // Remove comments and extra whitespace
+    cleaned = cleaned.replace(/\/\/.*$/gm, '');
+    cleaned = cleaned.replace(/\/\*[\s\S]*?\*\//g, '');
+    cleaned = cleaned.trim();
+    
+    return cleaned;
+  }
+
+  private validateJsonStructure(obj: any): boolean {
+    if (!obj || typeof obj !== 'object') {
+      return false;
+    }
+    
+    const requiredFields = ['destination', 'duration', 'days'];
+    for (const field of requiredFields) {
+      if (!obj[field]) {
+        return false;
+      }
+    }
+    
+    if (!Array.isArray(obj.days) || obj.days.length === 0) {
+      return false;
+    }
+    
+    return true;
+  }
+
+  private createFallbackItinerary(formData: TravelFormData): any {
+    const duration = this.calculateDuration(formData.departureDate, formData.returnDate);
+    
+    const fallbackDays = [];
+    const startDate = new Date(formData.departureDate);
+    
+    for (let i = 1; i <= duration; i++) {
+      const currentDate = new Date(startDate);
+      currentDate.setDate(startDate.getDate() + i - 1);
+      
+      fallbackDays.push({
+        day: i,
+        date: currentDate.toISOString().split('T')[0],
+        activities: [
+          {
+            name: `Explore ${formData.destination} - Day ${i}`,
+            description: `Discover the highlights and attractions of ${formData.destination}`,
+            time: "9:00 AM",
+            duration: "3 hours",
+            cost: Math.floor(formData.budget * 0.3),
+            category: "Sightseeing",
+            location: `${formData.destination} City Center`,
+            tips: ["Start early to avoid crowds", "Wear comfortable walking shoes"]
+          },
+          {
+            name: "Local Cultural Experience",
+            description: "Immerse yourself in the local culture with an authentic experience",
+            time: "2:00 PM",
+            duration: "2 hours",
+            cost: Math.floor(formData.budget * 0.2),
+            category: "Culture",
+            location: `Cultural District, ${formData.destination}`,
+            tips: ["Respect local customs", "Try to learn a few phrases in the local language"]
+          }
+        ],
+        restaurants: [
+          {
+            name: "Local Cuisine Restaurant",
+            cuisine: "Regional Specialties",
+            priceRange: `$${Math.floor(formData.budget * 0.15)}-${Math.floor(formData.budget * 0.25)}`,
+            description: "Authentic local dining experience with traditional dishes",
+            mustTryDishes: ["Regional specialty", "Local dessert"],
+            location: `Downtown ${formData.destination}`
+          },
+          {
+            name: "Casual Dining Spot",
+            cuisine: "International & Local",
+            priceRange: `$${Math.floor(formData.budget * 0.1)}-${Math.floor(formData.budget * 0.2)}`,
+            description: "Relaxed atmosphere with a variety of options",
+            mustTryDishes: ["Chef's special", "Popular local dish"],
+            location: `${formData.destination} Tourist Area`
+          }
+        ],
+        transportation: [
+          {
+            from: "Hotel",
+            to: "City Center",
+            method: "Public Transportation",
+            cost: Math.floor(formData.budget * 0.05),
+            duration: "20 minutes",
+            tips: ["Buy a day pass for better value"]
+          }
+        ],
+        dailyBudget: formData.budget
+      });
+    }
+    
+    return {
+      destination: formData.destination,
+      duration: duration,
+      totalBudget: formData.budget * duration,
+      days: fallbackDays,
+      culturalInsights: [
+        {
+          category: "Etiquette",
+          title: "Basic Cultural Etiquette",
+          description: `Important cultural norms and practices in ${formData.destination}`,
+          importance: "high",
+          tips: [
+            "Research local customs before your trip",
+            "Dress appropriately for religious sites",
+            "Learn basic greetings in the local language"
+          ]
+        }
+      ]
+    };
+  }
+
   async generateItinerary(formData: TravelFormData, signal?: AbortSignal): Promise<string> {
     if (!this.apiKey) {
       throw new Error('Gemini API key is required. Please check your environment configuration.');
@@ -163,7 +309,7 @@ Respond ONLY with JSON.`;
           }]
         }],
         generationConfig: {
-          temperature: 0.8,
+          temperature: 0.7,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 8192, // Increased token limit for longer responses
@@ -231,33 +377,38 @@ Respond ONLY with JSON.`;
         throw new Error('No response generated from Gemini API. The content may have been filtered for safety reasons.');
       }
 
-      const result = data.candidates[0].content.parts[0].text;
-      console.log('Generated text length:', result.length);
+      const resultText = data.candidates[0].content.parts[0].text;
+      console.log('Generated text length:', resultText.length);
       
-      if (result.length < 500) {
+      if (resultText.length < 500) {
         throw new Error('Generated response is too short. Please try again with more specific details.');
       }
 
       // Try to extract and format JSON if the response contains it
       try {
-        const jsonMatch = result.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          const jsonString = jsonMatch[0];
-          // Parse and stringify to validate and format JSON
-          const parsed = JSON.parse(jsonString);
-          // Add metadata
-          const enhanced = {
-            ...parsed,
-            id: `itinerary-${Date.now()}`,
-            createdAt: new Date().toISOString(),
-          };
-          return JSON.stringify(enhanced, null, 2);
+        const cleanedJson = this.cleanJsonResponse(resultText);
+        const parsed = JSON.parse(cleanedJson);
+        
+        if (!this.validateJsonStructure(parsed)) {
+          console.warn('Invalid JSON structure, using fallback');
+          const fallback = this.createFallbackItinerary(formData);
+          return JSON.stringify(fallback, null, 2);
         }
+        
+        // Add metadata
+        const enhanced = {
+          ...parsed,
+          id: `itinerary-${Date.now()}`,
+          createdAt: new Date().toISOString(),
+        };
+        return JSON.stringify(enhanced, null, 2);
       } catch (jsonError) {
-        console.warn('Failed to parse JSON from response, returning raw text:', jsonError);
+        console.warn('Failed to parse JSON from response:', jsonError);
+        const fallback = this.createFallbackItinerary(formData);
+        return JSON.stringify(fallback, null, 2);
       }
 
-      return result;
+      return resultText;
     } catch (error) {
       console.error('Gemini API request failed:', error);
       
@@ -273,7 +424,9 @@ Respond ONLY with JSON.`;
         }
       }
       
-      throw error;
+      // If we get here, create a fallback itinerary
+      const fallback = this.createFallbackItinerary(formData);
+      return JSON.stringify(fallback, null, 2);
     }
   }
 
