@@ -326,6 +326,18 @@ export function TravelGuides() {
     },
   ];
 
+  // Filter guides based on search term and selected filters
+  const filteredGuides = guides.filter(guide => {
+    const matchesSearch = guide.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         guide.author.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesCategory = selectedCategory === 'all' || guide.category === selectedCategory;
+    const matchesRegion = selectedRegion === 'all' || guide.region === selectedRegion;
+    
+    return matchesSearch && matchesCategory && matchesRegion;
+  });
+
   // If slug is provided, show the specific guide
   if (slug) {
     const guide = guides.find(g => g.slug === slug);
