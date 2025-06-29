@@ -36,7 +36,7 @@ class GeminiAPIService {
   private requestTimeout: number = 60000; // 60 seconds
 
   constructor() {
-    this.apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+    this.apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyB2h-YL3jBQpoKqFJeaTBdam1t3W3bGGSY';
     console.log('Gemini API Key loaded:', this.apiKey ? 'Yes' : 'No');
   }
 

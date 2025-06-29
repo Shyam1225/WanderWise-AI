@@ -91,6 +91,13 @@ export class WeatherService {
     this.baseUrl = 'https://api.weatherapi.com/v1';
     this.cache = new Map();
     
+    // Check if API key is a placeholder or invalid
+    if (this.apiKey === 'your_weather_api_key_here' || 
+        this.apiKey === 'your_production_weather_api_key_here') {
+      console.warn('Weather API key is a placeholder. Using fallback weather data.');
+      this.apiKey = '';
+    }
+    
     console.log('Weather API Key available:', !!this.apiKey);
   }
 
@@ -98,7 +105,7 @@ export class WeatherService {
     try {
       // If no API key is available, return fallback data immediately
       if (!this.apiKey) {
-        console.warn('No weather API key found. Using fallback weather data.');
+        console.warn('No valid weather API key found. Using fallback weather data.');
         return this.getFallbackWeatherData(location, days);
       }
 
@@ -139,7 +146,7 @@ export class WeatherService {
     try {
       // If no API key is available, return fallback data immediately
       if (!this.apiKey) {
-        console.warn('No weather API key found. Using fallback weather data.');
+        console.warn('No valid weather API key found. Using fallback weather data.');
         return this.getFallbackWeatherData(location, 1)[0];
       }
 
