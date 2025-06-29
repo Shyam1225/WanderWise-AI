@@ -30,12 +30,9 @@ interface TravelFormData {
 // Alias for TravelFormData to match the provided code
 type TravelPreferences = TravelFormData;
 
-// API URL constant
-const GEMINI_CHAT_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
-
 class GeminiAPIService {
   private apiKey: string;
-  private baseURL: string = GEMINI_CHAT_URL;
+  private baseURL: string = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
   private requestTimeout: number = 60000; // 60 seconds
 
   constructor() {
