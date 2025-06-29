@@ -8,7 +8,6 @@ import { Welcome } from './pages/Welcome';
 import { TripPlanner } from './pages/TripPlanner';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
-import { TravelGuides } from './pages/TravelGuides';
 import { Profile } from './pages/Profile';
 import { Pricing } from './pages/Pricing';
 import { Blog } from './pages/Blog';
@@ -44,10 +43,6 @@ function AppContent() {
           <Route path="/trip-planner" element={<TripPlanner />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          
-          {/* Travel Content */}
-          <Route path="/travel-guides" element={<TravelGuides />} />
-          <Route path="/travel-guides/:slug" element={<TravelGuides />} />
           
           {/* User Features */}
           <Route path="/profile" element={<Profile />} />

@@ -53,8 +53,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/travel-guides" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Travel Guides
+                <Link to="/virtual-travel" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Virtual Travel
                 </Link>
               </li>
             </ul>
@@ -75,13 +75,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Careers
+                <Link to="/blog" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Blog
                 </Link>
               </li>
               <li>
-                <Link to="/press" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Press
+                <Link to="/pricing" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Pricing
                 </Link>
               </li>
             </ul>
