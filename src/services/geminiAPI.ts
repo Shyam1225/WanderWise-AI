@@ -407,6 +407,10 @@ When traveling between cities, provide:
 
 **IMPORTANT: YOU MUST GENERATE A COMPLETE ITINERARY FOR ALL ${tripDuration} DAYS, NOT JUST THE FIRST 3 DAYS. THE ENTIRE TRIP FROM ${formData.departureDate} TO ${formData.returnDate} MUST BE COVERED IN DETAIL.**
 
+**CRITICAL INSTRUCTION: DO NOT STOP AFTER 3 DAYS. YOU MUST PROVIDE A DETAILED PLAN FOR EACH OF THE ${tripDuration} DAYS OF THE TRIP. EACH DAY MUST FOLLOW THE EXACT FORMAT SPECIFIED ABOVE.**
+
+**REMINDER: THIS IS A ${tripDuration}-DAY TRIP. THE TRAVELER NEEDS A COMPLETE ITINERARY FOR ALL ${tripDuration} DAYS.**
+
 Create an itinerary so detailed that a traveler could follow it minute-by-minute and have an absolutely incredible, authentic experience without any additional research needed!`
   }
 
