@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useLocation, NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, Compass, ChevronDown, Search, User, HelpCircle, Bell, Globe as Globe3D } from 'lucide-react';
+import { Menu, X, Compass, ChevronDown, Search, HelpCircle } from 'lucide-react';
 import { useTravelContext } from '../../context/TravelContext';
-import { Button } from '../ui/Button';
 import { GlobalSearch } from '../search/GlobalSearch';
-import { UserPreferences } from '../user/UserPreferences';
 import { HelpSupportSystem } from '../help/HelpSupportSystem';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDestinationsOpen, setIsDestinationsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [showUserPreferences, setShowUserPreferences] = useState(false);
   const [showHelpSystem, setShowHelpSystem] = useState(false);
   const { state, dispatch } = useTravelContext();
   const location = useLocation();
@@ -81,21 +78,6 @@ export function Header() {
               >
                 <HelpCircle className="w-5 h-5" />
               </button>
-              <div className="relative">
-                <button
-                  onClick={() => setShowUserPreferences(true)}
-                  className="p-2 text-white hover:text-[#ff6b35] transition-colors duration-200"
-                  aria-label="User preferences"
-                >
-                  <User className="w-5 h-5" />
-                </button>
-                {state.user.isLoggedIn && (
-                  <span className="absolute top-0 right-0 w-2 h-2 bg-green-500 rounded-full"></span>
-                )}
-              </div>
-              <Link to="/pricing">
-                <Button size="sm" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">Get Started</Button>
-              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -154,20 +136,7 @@ export function Header() {
                   >
                     <HelpCircle className="w-5 h-5" />
                   </button>
-                  <button
-                    onClick={() => {
-                      setShowUserPreferences(true);
-                      setIsMenuOpen(false);
-                    }}
-                    className="p-2 text-white hover:text-[#ff6b35] transition-colors duration-200"
-                    aria-label="User preferences"
-                  >
-                    <User className="w-5 h-5" />
-                  </button>
                 </div>
-                <Link to="/pricing" onClick={() => setIsMenuOpen(false)}>
-                  <Button size="sm" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">Get Started</Button>
-                </Link>
               </div>
             </div>
           </motion.div>
@@ -177,11 +146,6 @@ export function Header() {
       {/* Global Search Modal */}
       {showSearch && (
         <GlobalSearch onClose={() => setShowSearch(false)} />
-      )}
-
-      {/* User Preferences Modal */}
-      {showUserPreferences && (
-        <UserPreferences onClose={() => setShowUserPreferences(false)} />
       )}
 
       {/* Help & Support Modal */}

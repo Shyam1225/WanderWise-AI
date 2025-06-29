@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Globe, Clock, Users, Star, MapPin, Search, User, HelpCircle } from 'lucide-react';
+import { ArrowRight, Sparkles, Globe, Clock, Users, Star, MapPin, Search, HelpCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { GlobalSearch } from '../components/search/GlobalSearch';
-import { UserPreferences } from '../components/user/UserPreferences';
 import { HelpSupportSystem } from '../components/help/HelpSupportSystem';
 import { SEOOptimization } from '../components/seo/SEOOptimization';
 import { VirtualTravelPromo } from '../components/home/VirtualTravelPromo';
 
 export function Home() {
   const [showSearch, setShowSearch] = useState(false);
-  const [showUserPreferences, setShowUserPreferences] = useState(false);
   const [showHelpSystem, setShowHelpSystem] = useState(false);
 
   const features = [
@@ -149,13 +147,6 @@ export function Home() {
                 aria-label="Search"
               >
                 <Search className="w-6 h-6" />
-              </button>
-              <button
-                onClick={() => setShowUserPreferences(true)}
-                className="p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors duration-200"
-                aria-label="User preferences"
-              >
-                <User className="w-6 h-6" />
               </button>
               <button
                 onClick={() => setShowHelpSystem(true)}
@@ -334,7 +325,6 @@ export function Home() {
 
       {/* Modals */}
       {showSearch && <GlobalSearch onClose={() => setShowSearch(false)} />}
-      {showUserPreferences && <UserPreferences onClose={() => setShowUserPreferences(false)} />}
       {showHelpSystem && <HelpSupportSystem onClose={() => setShowHelpSystem(false)} />}
     </div>
   );
