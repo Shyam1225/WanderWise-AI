@@ -17,6 +17,7 @@ export function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Trip Planner', href: '/trip-planner' },
+    { name: 'Travel Guides', href: '/travel-guides' },
     { name: 'Virtual Travel', href: '/virtual-travel' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },

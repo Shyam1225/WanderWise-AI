@@ -48,8 +48,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/features" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  AI Features
+                <Link to="/travel-guides" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Travel Guides
                 </Link>
               </li>
               <li>
