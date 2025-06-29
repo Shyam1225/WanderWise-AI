@@ -36,7 +36,6 @@ export function Header() {
     },
     { name: 'Travel Guides', href: '/travel-guides' },
     { name: 'Virtual Travel', href: '/virtual-travel' },
-    { name: 'My Trips', href: '/my-trips' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];

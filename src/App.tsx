@@ -10,7 +10,6 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Destinations } from './pages/Destinations';
 import { TravelGuides } from './pages/TravelGuides';
-import { MyTrips } from './pages/MyTrips';
 import { Profile } from './pages/Profile';
 import { Pricing } from './pages/Pricing';
 import { Blog } from './pages/Blog';
@@ -54,8 +53,6 @@ function AppContent() {
           <Route path="/travel-guides/:slug" element={<TravelGuides />} />
           
           {/* User Features */}
-          <Route path="/my-trips" element={<MyTrips />} />
-          <Route path="/my-trips/:id" element={<MyTrips />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/pricing" element={<Pricing />} />
           
