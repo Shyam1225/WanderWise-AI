@@ -51,7 +51,8 @@ export default {
           700: '#c47c15',
           800: '#9c6317',
           900: '#7d5016',
-        }
+        },
+        customBlue: 'rgb(38, 64, 119)'
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -91,7 +91,7 @@ export function Blog() {
     : posts;
 
   return (
-    <div className="min-h-screen pt-16 bg-white dark:bg-customBlue text-white">
+    <div className="min-h-screen pt-16" style={{ backgroundColor: 'rgb(38, 64, 119)', color: 'white' }}>
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-gray-800 dark:to-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
