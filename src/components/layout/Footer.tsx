@@ -79,11 +79,6 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
-              <li>
-                <Link to="/pricing" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Pricing
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -99,16 +94,6 @@ export function Footer() {
               <li>
                 <Link to="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link to="/cookies" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Cookie Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/disclaimer" className="text-gray-400 hover:text-white transition-colors duration-200">
-                  Disclaimer
                 </Link>
               </li>
             </ul>
