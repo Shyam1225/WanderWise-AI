@@ -201,6 +201,13 @@ Respond ONLY with JSON.`;
       return false;
     }
     
+    // Verify that all days are present
+    const expectedDayCount = obj.duration;
+    if (obj.days.length < expectedDayCount) {
+      console.warn(`Incomplete itinerary: Expected ${expectedDayCount} days, but got ${obj.days.length}`);
+      return false;
+    }
+    
     return true;
   }
 
@@ -391,6 +398,14 @@ Respond ONLY with JSON.`;
         
         if (!this.validateJsonStructure(parsed)) {
           console.warn('Invalid JSON structure, using fallback');
+          const fallback = this.createFallbackItinerary(formData);
+          return JSON.stringify(fallback, null, 2);
+        }
+        
+        // Ensure all days are present
+        const expectedDays = this.calculateDuration(formData.departureDate, formData.returnDate);
+        if (parsed.days.length < expectedDays) {
+          console.warn(`Incomplete itinerary: Expected ${expectedDays} days, but got ${parsed.days.length}. Using fallback.`);
           const fallback = this.createFallbackItinerary(formData);
           return JSON.stringify(fallback, null, 2);
         }
