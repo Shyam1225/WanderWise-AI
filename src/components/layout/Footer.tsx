@@ -23,18 +23,6 @@ export function Footer() {
               Transform your travel dreams into reality with AI-powered planning that understands your unique style and preferences.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-200">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-200">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-200">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-200">
-                <Mail className="w-5 h-5" />
-              </a>
             </div>
           </div>
 
@@ -79,6 +67,8 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+              </li>
             </ul>
           </div>
 
@@ -95,6 +85,13 @@ export function Footer() {
                 <Link to="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Terms of Service
                 </Link>
+              </li>
+              <li>
+                <Link to="/cookies" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
               </li>
             </ul>
           </div>
