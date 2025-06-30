@@ -26,27 +26,6 @@ export function About() {
     },
   ];
 
-  const team = [
-    {
-      name: 'Alex Chen',
-      role: 'CEO & Co-Founder',
-      image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
-      description: 'Former Google product manager with 50+ countries visited.',
-    },
-    {
-      name: 'Sarah Rodriguez',
-      role: 'CTO & Co-Founder',
-      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
-      description: 'AI researcher and digital nomad who lived in 15 countries.',
-    },
-    {
-      name: 'Marcus Thompson',
-      role: 'Head of AI',
-      image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
-      description: 'PhD in Machine Learning with expertise in travel behavior.',
-    },
-  ];
-
   return (
     <div className="min-h-screen pt-16 bg-white dark:bg-gray-900">
       {/* Hero Section */}
@@ -162,59 +141,6 @@ export function About() {
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     {value.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4">
-              Meet Our Team
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Passionate travelers and technologists working together to revolutionize trip planning.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group"
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2 text-center">
-                  <div className="relative mb-6">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-24 h-24 rounded-full object-cover mx-auto shadow-lg"
-                    />
-                    <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-full mx-auto" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
-                    {member.role}
-                  </p>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                    {member.description}
                   </p>
                 </div>
               </motion.div>
